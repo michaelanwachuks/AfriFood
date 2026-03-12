@@ -1,0 +1,18 @@
+.navigationbar_style {
+  width: 100%;
+  height: 120px;
+  padding: 5px;
+  background-color: #1a1a1a;
+
+  display: flex;
+  justify-content: flex-end; /* pushes items to the right */
+  align-items: center;
+}
+
+.navigationbar_style ul {
+  display: flex;
+  list-style: none;
+  gap: 2em;
+  margin: 0;
+  padding: 0;
+}
