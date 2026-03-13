@@ -6,6 +6,7 @@ import Menu from './components/Menu'
 import About from './components/About'
 import FAQ from './components/FAQ'
 import Contact from './components/Contact'
+import 'bootstrap/dist/css/bootstrap.css';
 
 function App() {
   

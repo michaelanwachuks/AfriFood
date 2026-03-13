@@ -22,8 +22,13 @@
 
 .card {
   padding: 2em;
+  
 }
 
+.card h6 {
+  color: #d35400;
+  font-weight: bold;
+}
 .read-the-docs {
   color: #888;
 }
