@@ -1,4 +1,4 @@
-//import './Menu.css'
+import './Menu.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import jollof from '../assets/jollof.jpg'
 import poundo from '../assets/poundo.jpg'
@@ -19,17 +19,22 @@ const Menu = () => {
     { id: 5, name: 'Suya', description: 'Traditional Nigerian dish made from cow meat.', price: '$20.99', image: suya2 },
     { id: 6, name: 'Amala and Ewedu', description: 'Traditional Nigerian dish made from yam and ewedu.', price: '$12.99', image: amalaewedu }
   ];
+
+ const addToCart = (item) => {
+    // Logic to add the item to the cart
+    console.log(`Added ${item.name} to cart! ${item.price}`);
+  }
   return (
     <div>
        
        <div className="container mt-5">
-      <h2 className="text-center mb-4">Our Menu</h2>
+      <h2 className="text-center mb-4 menu_style">Our Menu</h2>
 
       <div className="row g-4">
 
-        {menuItems.map((item)=>{
+        {menuItems.map((item, index)=>{
           return (
-            <div className="col-md-4">
+            <div className="col-md-4" key={index}>  
           <div className="card h-100">
             <img src={item.image} width={200} height={200} className="card-img-top" alt={item.name}/>
             <div className="card-body">
@@ -39,7 +44,7 @@ const Menu = () => {
               </p>
               <h6>{item.price}</h6>
               <br/>
-              <button className="btn btn-primary">Order Now</button>
+              <button className="btn btn-primary" onClick={() => addToCart(item)}>Order Now</button>
             </div>
           </div>
         </div>

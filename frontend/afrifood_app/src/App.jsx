@@ -6,7 +6,10 @@ import Menu from './components/Menu'
 import About from './components/About'
 import FAQ from './components/FAQ'
 import Contact from './components/Contact'
+import Cart from './components/Cart'
+import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.css';
+import Footer from './components/Footer';
 
 function App() {
   
@@ -14,6 +17,7 @@ function App() {
     <BrowserRouter>
     
         <NavigationBar />
+       
         
           <Routes>
             <Route path="/" element={<Home />} />
@@ -21,8 +25,10 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
-       
+        <Footer/>
     </BrowserRouter>
   )
 }
