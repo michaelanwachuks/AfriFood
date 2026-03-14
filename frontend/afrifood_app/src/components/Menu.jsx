@@ -6,6 +6,9 @@ import amala from '../assets/amala.jpg'
 import suya from '../assets/suya.jpg'
 import suya2 from '../assets/suya_sallat.jpg'
 import amalaewedu from '../assets/amala-and-ewedu-2.jpg'
+import { useState } from "react";
+import CartContext from './CartContext';
+import { useContext } from 'react'; 
 
 
 const Menu = () => {
@@ -20,10 +23,8 @@ const Menu = () => {
     { id: 6, name: 'Amala and Ewedu', description: 'Traditional Nigerian dish made from yam and ewedu.', price: '$12.99', image: amalaewedu }
   ];
 
- const addToCart = (item) => {
-    // Logic to add the item to the cart
-    console.log(`Added ${item.name} to cart! ${item.price}`);
-  }
+  // Get the addToCart function from the CartContext(using destructuring assignment)
+  const { addToCart } = useContext(CartContext);
   return (
     <div>
        

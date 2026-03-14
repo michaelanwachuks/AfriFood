@@ -10,10 +10,13 @@ import Cart from './components/Cart'
 import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
+import  { CartProvider } from './components/CartContext'; 
+ 
 
 function App() {
   
   return (
+      <CartProvider>
     <BrowserRouter>
     
         <NavigationBar />
@@ -30,6 +33,7 @@ function App() {
           </Routes>
         <Footer/>
     </BrowserRouter>
+    </CartProvider>
   )
 }
 
