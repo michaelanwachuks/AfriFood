@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+ import {CartProvider}  from "./components/CartContext";
 import './App.css'
 import NavigationBar from './components/NavigationBar'
 import Home from './components/Home'
@@ -10,18 +11,20 @@ import Cart from './components/Cart'
 import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
-import  { CartProvider } from './components/CartContext'; 
+import CartContext from './components/CartContext';
+
+
  
 
 function App() {
   
   return (
-      <CartProvider>
+      <CartProvider >
+        
     <BrowserRouter>
     
         <NavigationBar />
        
-        
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/menu" element={<Menu />} />

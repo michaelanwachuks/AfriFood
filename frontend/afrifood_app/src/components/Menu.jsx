@@ -13,6 +13,9 @@ import { useContext } from 'react';
 
 const Menu = () => {
 
+   // Get the addToCart function from the CartContext(using destructuring assignment)
+  const { addToCart } = useContext(CartContext);
+
    //define the menu data to display the menu dynamically
    const menuItems = [
     { id: 1, name: 'Jollof Rice', description: 'Delicious Jollof rice with herbs and spices.', price: '$12.99', image: jollof },
@@ -23,8 +26,7 @@ const Menu = () => {
     { id: 6, name: 'Amala and Ewedu', description: 'Traditional Nigerian dish made from yam and ewedu.', price: '$12.99', image: amalaewedu }
   ];
 
-  // Get the addToCart function from the CartContext(using destructuring assignment)
-  const { addToCart } = useContext(CartContext);
+ 
   return (
     <div>
        

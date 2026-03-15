@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import CartContext from './CartContext';
+//import React from 'react'
  import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Cart = () => {
 
-  const [cartItems, setCartItems] = useState([
+  //use descructuring assignment to get cartItems
+  const { cartItems, total, increaseQty, decreaseQty, removeItem } = useContext(CartContext);
+
+
+  /* const [cartItems, setCartItems] = useState([
     {
       id: 1,
       name: "Jollof Rice",
@@ -48,7 +54,7 @@ const Cart = () => {
   const total = cartItems.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
-  );
+  ); */
 
   return (
     <div className="container mt-5">
