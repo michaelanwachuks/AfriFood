@@ -9,53 +9,6 @@ const Cart = () => {
   //use descructuring assignment to get cartItems
   const { cartItems, total, increaseQty, decreaseQty, removeItem } = useContext(CartContext);
 
-
-  /* const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Jollof Rice",
-      price: 12,
-      quantity: 1,
-      image: "/images/jollof.jpg"
-    },
-    {
-      id: 2,
-      name: "Suya",
-      price: 10,
-      quantity: 2,
-      image: "/images/suya.jpg"
-    }
-  ]);
-
-  const increaseQty = (id) => {
-    setCartItems(
-      cartItems.map(item =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
-  };
-
-  const decreaseQty = (id) => {
-    setCartItems(
-      cartItems.map(item =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
-          : item
-      )
-    );
-  };
-
-  const removeItem = (id) => {
-    setCartItems(cartItems.filter(item => item.id !== id));
-  };
-
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  ); */
-
   return (
     <div className="container mt-5">
 
@@ -137,7 +90,7 @@ const Cart = () => {
               <p>
                 Subtotal:
                 <span className="float-end">
-                  ${total}
+                  ${total.toFixed(2)}
                 </span>
               </p>
 
@@ -151,7 +104,7 @@ const Cart = () => {
               <h5>
                 Total:
                 <span className="float-end">
-                  ${total + 3}
+                  ${(total + 3).toFixed(2)}
                 </span>
               </h5>
 

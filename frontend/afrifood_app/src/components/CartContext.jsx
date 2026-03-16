@@ -11,11 +11,28 @@ export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
 
     // Function to add an item to the cart
-  const addToCart = (item) => {
+  /* const addToCart = (item) => {
     console.log("Adding to cart:", item);
-    setCartItems([...cartItems, item]);
+    setCartItems([...cartItems, { ...item, quantity: 1 }]);
     
-  };
+  }; */
+
+  const addToCart = (item) => {
+  setCartItems(prevItems => {
+
+    const existingItem = prevItems.find(i => i.id === item.id);
+
+    if (existingItem) {
+      return prevItems.map(the_item =>
+        the_item.id === item.id
+          ? { ...the_item, quantity: the_item.quantity + 1 }
+          : the_item
+      );
+    }
+
+    return [...prevItems, { ...item, quantity: 1 }];
+  });
+};
 
   // Function to remove an item from the cart
   const removeFromCart = (item) => {
@@ -23,14 +40,14 @@ export const CartProvider = ({ children }) => {
   };
 
   const increaseQty = (id) => {
-    setCartItems(
-      cartItems.map(item =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      )
-    );
-  };
+  setCartItems(prevItems =>
+    prevItems.map(item =>
+      item.id === id
+        ? { ...item, quantity: (item.quantity || 0) + 1 }
+        : item
+    )
+  );
+};
 
   const decreaseQty = (id) => {
     setCartItems(

@@ -1,8 +1,11 @@
 import './NavigationBar.css'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
 
 
 const NavigationBar = () => {
+  const { total } = useContext(CartContext);
+
   return (
     <div>
 <nav  className='navigationbar_style'>
