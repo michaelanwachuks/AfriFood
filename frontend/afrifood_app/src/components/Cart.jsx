@@ -38,7 +38,7 @@ const Cart = () => {
                   <div className="col-md-5">
                     <div className="card-body">
                       <h5>{item.name}</h5>
-                      <p>${item.price}</p>
+                      <p>₦{item.price}</p>
                     </div>
                   </div>
 
@@ -90,13 +90,13 @@ const Cart = () => {
               <p>
                 Subtotal:
                 <span className="float-end">
-                  ${total.toFixed(2)}
+                  ₦{total.toFixed(2)}
                 </span>
               </p>
 
               <p>
                 Delivery Fee:
-                <span className="float-end">$3</span>
+                <span className="float-end">₦3,000.00</span>
               </p>
 
               <hr />
@@ -104,7 +104,7 @@ const Cart = () => {
               <h5>
                 Total:
                 <span className="float-end">
-                  ${(total + 3).toFixed(2)}
+                  ₦{(total + 3).toFixed(2)}
                 </span>
               </h5>
 

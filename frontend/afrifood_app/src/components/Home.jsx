@@ -1,15 +1,30 @@
 import React from "react";
 import jollofImage from "../assets/jollof.jpg";
-import suyaImage from "../assets/suya.jpg";
+import suyaImage from "./../assets/suya.jpg";
 import amalaImage from "../assets/amala.jpg"; 
+import menuItems from "../data/MenuData";
+import { useState } from "react";
 import Footer from "./Footer";
 
-
 const Home = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [theMenuItems, settheMenuItems] = useState(menuItems);
+
+  //create a filter function to filter the menu items based on the search query
+  const filterMenuItems = (query) => {
+
+  const filtered = menuItems.filter(item =>
+    item.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  settheMenuItems(filtered);
+  console.log(filtered);
+};
+
+
   return (
      
     <div>
-
       {/* Hero section*/}
       <section className="bg-dark text-white text-center p-5">
         <div className="container">
@@ -22,8 +37,56 @@ const Home = () => {
             <input
               className="form-control w-50 me-2"
               placeholder="Search for African meals"
+              value={searchTerm}
+              onChange={(e) => {
+              const query = e.target.value;
+              setSearchTerm(query);
+
+              const filtered = menuItems.filter(item =>
+               item.name.toLowerCase().includes(query.toLowerCase())
+           );
+
+            settheMenuItems(filtered);
+       }}
+              
             />
-            <button className="btn btn-warning">Search</button>
+
+           {searchTerm && (
+                <div className="container mt-5">
+  <div className="row">
+
+    {theMenuItems.length > 0 ? (
+      theMenuItems.map(item => (
+        <div key={item.id} className="col-md-4 mb-4">
+
+          <div className="card h-100 shadow-sm">
+            
+            {/* Image */}
+            <img
+              src={item.image}
+              className="card-img-top"
+              alt={item.name}
+              style={{ height: "200px", objectFit: "cover" }}
+            />
+
+            {/* Content */}
+            <div className="card-body">
+              <h5 className="card-title">{item.name}</h5>
+              <p className="card-text">{item.description}</p>
+              <h6>₦{item.price}</h6>
+            </div>
+
+          </div>
+
+        </div>
+      ))
+    ) : (
+      <p className="text-center">No food found</p>
+    )}
+
+  </div>
+</div>
+            )}
           </div>
         </div>
       </section>
