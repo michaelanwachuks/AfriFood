@@ -51,6 +51,8 @@ const Home = () => {
               
             />
 
+          
+          </div>
            {searchTerm && (
                 <div className="container mt-5">
   <div className="row">
@@ -74,6 +76,8 @@ const Home = () => {
               <h5 className="card-title">{item.name}</h5>
               <p className="card-text">{item.description}</p>
               <h6>₦{item.price}</h6>
+              <br />
+              <button className="btn btn-primary">Order Now</button>
             </div>
 
           </div>
@@ -87,7 +91,6 @@ const Home = () => {
   </div>
 </div>
             )}
-          </div>
         </div>
       </section>
 
