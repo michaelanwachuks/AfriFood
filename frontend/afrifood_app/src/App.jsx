@@ -8,6 +8,7 @@ import About from './components/About'
 import FAQ from './components/FAQ'
 import Contact from './components/Contact'
 import Cart from './components/Cart'
+import Register from './components/Register'
 import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
@@ -32,6 +33,7 @@ function App() {
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Routes>
         <Footer/>

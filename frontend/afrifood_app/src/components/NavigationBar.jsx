@@ -17,6 +17,7 @@ const NavigationBar = () => {
         <li><Link to="/faq">FAQ</Link></li>
         <li><Link to="/contact">Contact</Link></li>
         <li><Link to="/cart">Cart{cartCount > 0 && <span className="badge bg-warning">{cartCount}</span>}</Link></li>
+        <li><Link to="/register">Register</Link></li>
         <li><Link to="/login">Login</Link></li>
   </ul>
 </nav>
