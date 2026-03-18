@@ -45,7 +45,7 @@ const Menu = () => {
               <p className="card-text">
                 {item.description}
               </p>
-              <h6>{item.price}</h6>
+              <h6>₦{item.price}</h6>
               <br/>
               <button className="btn btn-primary" onClick={() => addToCart(item)}>Order Now</button>
             </div>
