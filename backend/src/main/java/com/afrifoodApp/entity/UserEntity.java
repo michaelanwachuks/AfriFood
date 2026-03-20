@@ -1,4 +1,4 @@
-package com.afrifoodApp.model;
+package com.afrifoodApp.entity;
 
 import java.util.Date;
 import jakarta.persistence.Entity;
