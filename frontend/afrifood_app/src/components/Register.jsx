@@ -28,7 +28,24 @@ const Register = () => {
 
     console.log("User Registered:", formData);
     // later → send to backend API
-};
+    fetch("http://localhost:8080/api/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("User registered successfully:", data);
+      // Handle successful registration (e.g., redirect to login page)
+    })
+    .catch(error => {
+      console.error("Error registering user:", error);
+      // Handle registration error
+    });
+  };
+
  return (
     <div className="container mt-5">
       <div className="row justify-content-center">
