@@ -31,7 +31,11 @@ const Register = () => {
     fetch("http://localhost:8080/api/register", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "POST, GET, OPTIONS, DELETE",
+        "accept": "application/json"
       },
       body: JSON.stringify(formData)
     })

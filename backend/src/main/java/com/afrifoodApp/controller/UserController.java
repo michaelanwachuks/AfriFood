@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.afrifoodApp.entity.UserEntity;
 import com.afrifoodApp.services.UserService;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api")
+@CrossOrigin("http://localhost:5173") // Allow requests from any origin
 public class UserController {
     //inject the UserService
     @Autowired
     UserService userService;
-    
     @PostMapping("/register")
     public UserEntity registerUser(@RequestBody UserEntity user)   {
        return userService.registerUser(user);

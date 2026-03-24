@@ -10,4 +10,5 @@ public class AfrifoodAppApplication {
 		SpringApplication.run(AfrifoodAppApplication.class, args);
 	}
 
+	
 }
