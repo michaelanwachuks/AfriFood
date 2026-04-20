@@ -1,5 +1,6 @@
 package com.afrifoodApp.entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -23,27 +24,26 @@ public class UserEntity {
     private String email;
     private String phone;
     private String password;
-    private String confirmPassword;
+
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
 
     //create emply constructor
     public UserEntity() {
     }
 
     //create constructor with parameters
-    public UserEntity(Long id, String thename, String confirmPass, String email, String phone, String password, Date createdAt, Date updatedAt) {
+    public UserEntity(Long id, String thename,  String email, String phone, String password, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = thename;
         this.email = email;
         this.phone = phone;
         this.password = password;
-        this.confirmPassword = confirmPass;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt; 
     }
@@ -86,24 +86,18 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }   
     
-    public Date getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
     
-    public Date getUpdatedAt() {
+    public LocalDateTime getUpdatedAt() {
         return updatedAt;
     }
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }   
 
@@ -116,7 +110,6 @@ public class UserEntity {
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' + 
                 ", password='" + password + '\'' +
-                ", confirmPassword='" + confirmPassword + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';
