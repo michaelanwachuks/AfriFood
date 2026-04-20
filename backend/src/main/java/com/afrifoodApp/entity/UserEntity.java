@@ -1,6 +1,11 @@
 package com.afrifoodApp.entity;
 
 import java.util.Date;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,11 +19,17 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String username;
+    private String name;
     private String email;
     private String phone;
     private String password;
+    private String confirmPassword;
+
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
     private Date createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
     private Date updatedAt;
 
     //create emply constructor
@@ -26,12 +37,13 @@ public class UserEntity {
     }
 
     //create constructor with parameters
-    public UserEntity(Long id, String username, String email, String phone, String password, Date createdAt, Date updatedAt) {
+    public UserEntity(Long id, String thename, String confirmPass, String email, String phone, String password, Date createdAt, Date updatedAt) {
         this.id = id;
-        this.username = username;
+        this.name = thename;
         this.email = email;
         this.phone = phone;
         this.password = password;
+        this.confirmPassword = confirmPass;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt; 
     }
@@ -45,12 +57,12 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String thename) {
+        this.name = thename;
     }
 
     public String getEmail() {
@@ -74,23 +86,37 @@ public class UserEntity {
     public void setPassword(String password) {
         this.password = password;
     }
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }   
+    
     public Date getCreatedAt() {
         return createdAt;
     }
-
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+    
     public Date getUpdatedAt() {
         return updatedAt;
     }
+    public void setUpdatedAt(Date updatedAt) {
+        this.updatedAt = updatedAt;
+    }   
 
     // Override toString() method
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
+                ", thename='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", phone='" + phone + '\'' + 
                 ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
                 '}';

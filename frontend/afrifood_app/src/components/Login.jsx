@@ -1,5 +1,6 @@
 import React from 'react'
  import { useState } from "react";
+ import "./Login.css";
 
 const Login = () => {
 
@@ -46,7 +47,7 @@ const Login = () => {
   };
 
    return (
-    <div className="container mt-5">
+    <div className="container logincontainer mt-5">
       <div className="row justify-content-center">
 
         <div className="col-md-5">
@@ -63,7 +64,7 @@ const Login = () => {
             <form onSubmit={handleSubmit}>
 
               {/* Email */}
-              <div className="mb-3">
+              <div className="mb-3 ">
                 <label className="form-label">Email Address</label>
                 <input
                   type="email"

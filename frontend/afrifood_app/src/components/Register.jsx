@@ -3,7 +3,7 @@ import { useState } from "react";
 const Register = () => {
 
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     email: "",
     phone: "",
     password: "",
@@ -67,8 +67,8 @@ const Register = () => {
                 <input
                   type="text"
                   className="form-control"
-                  name="fullName"
-                  value={formData.fullName}
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   required
                 />
