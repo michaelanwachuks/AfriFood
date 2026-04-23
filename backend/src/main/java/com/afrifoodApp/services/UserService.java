@@ -52,13 +52,13 @@ registerRequest = request;
     //define a method to login user
     public UserEntity loginUser(String email, String password) {
         //find user by email
-        UserEntity user = userRepository.findByEmailandPassword(email, password).stream().findFirst().orElse(null);
+        UserEntity user = userRepository.findByEmailAndPassword(email, password).stream().findFirst().orElse(null);
         if (user == null) {
             throw new RuntimeException("Invalid email or password");
         }
         return user;
     }
 
-    
+
          
 }

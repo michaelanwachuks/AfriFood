@@ -1,9 +1,11 @@
 import React from 'react'
  import { useState } from "react";
+ import { useNavigate } from "react-router-dom";
  import "./Login.css";
 
 const Login = () => {
 
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -36,9 +38,24 @@ const Login = () => {
       console.log("Logging in:", formData);
 
       // Example:
-      // const res = await fetch("/api/login", {...})
+       const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
 
       setLoading(false);
+      console.log("Login response:", res);
+
+      if (res.ok) {
+        // Handle successful login (e.g., redirect, store token)
+        console.log("Login successful");
+        navigate("/components/Cart");
+      } else {
+        setError("Invalid email or password");
+      }
 
     } catch (err) {
       setLoading(false);
