@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.afrifoodApp.config.JwtUtil;
 import com.afrifoodApp.dto.RegisterRequest;
 import com.afrifoodApp.entity.UserEntity;
 import com.afrifoodApp.services.UserService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -20,14 +24,16 @@ public class UserController {
     //inject the UserService
     @Autowired
     UserService userService;
+    
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request)   {
        return ResponseEntity.ok(userService.registerUser(request));    
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody RegisterRequest request) {
-        UserEntity user = userService.loginUser(request.getEmail(), request.getPassword());
+    public ResponseEntity<?> loginUser(@RequestBody RegisterRequest request,  HttpServletResponse response) {
+       UserEntity user = userService.loginUser(request.getEmail(), request.getPassword(), request, response);
+      
         return ResponseEntity.ok(user);
     }
     
@@ -35,3 +41,4 @@ public class UserController {
 
 
 }
+
