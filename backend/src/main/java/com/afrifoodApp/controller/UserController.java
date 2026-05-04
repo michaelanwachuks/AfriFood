@@ -2,19 +2,19 @@ package com.afrifoodApp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.boot.security.autoconfigure.SecurityProperties.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.afrifoodApp.config.JwtUtil;
+import com.afrifoodApp.dto.LoginRequest;
 import com.afrifoodApp.dto.RegisterRequest;
 import com.afrifoodApp.entity.UserEntity;
 import com.afrifoodApp.services.UserService;
-
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -31,11 +31,21 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody RegisterRequest request,  HttpServletResponse response) {
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest request,  HttpServletResponse response) {
        UserEntity user = userService.loginUser(request.getEmail(), request.getPassword(), request, response);
       
         return ResponseEntity.ok(user);
     }
+
+    @GetMapping("/auth/me")
+   public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+
+    if (authentication == null || !authentication.isAuthenticated()) {
+        return ResponseEntity.status(401).body("Not logged in");
+    }
+
+    return ResponseEntity.ok(authentication.getPrincipal());
+}
     
 
 

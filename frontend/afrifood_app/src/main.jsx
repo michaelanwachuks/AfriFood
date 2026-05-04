@@ -5,10 +5,13 @@ import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import AuthProvider from './components/AuthProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <App />
+    <AuthProvider>
+      <App />
+    </AuthProvider>
   </StrictMode>,
 )
 

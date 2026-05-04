@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.afrifoodApp.config.JwtUtil;
+import com.afrifoodApp.dto.LoginRequest;
 import com.afrifoodApp.dto.RegisterRequest;
 import com.afrifoodApp.entity.UserEntity;
 import com.afrifoodApp.model.UserRepository;
@@ -55,7 +56,7 @@ public class UserService {
     }
 
     //define a method to login user
-    public UserEntity loginUser(String email, String password, RegisterRequest request, HttpServletResponse response    ) {
+    public UserEntity loginUser(String email, String password, LoginRequest request, HttpServletResponse response    ) {
 
         UserEntity user = userRepository.findByEmail(email);
         if (user == null) {

@@ -13,6 +13,7 @@ import Login from './components/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
 import CartContext from './components/CartContext';
+import ProtectedRoute from './components/ProtectedRoute';
 
 
  
@@ -32,7 +33,9 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={
+              <ProtectedRoute> <Cart /> </ProtectedRoute>
+              } />
             <Route path="/register" element={<Register />} />
             <Route path="/login" element={<Login />} />
           </Routes>
