@@ -1,8 +1,7 @@
 package com.afrifoodApp.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-
+import java.util.List;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -11,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,9 +21,19 @@ public class UserEntity {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String email;
+
     private String phone;
     private String password;
+
+    @OneToMany(mappedBy = "user")
+    private List<OrderEntity> orders;  
+    
+
+    @OneToMany(mappedBy = "user")
+    private List<Cart> cart;
 
 
     @CreationTimestamp

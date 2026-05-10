@@ -5,16 +5,16 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // 🔐 Fetch current logged-in user
+  //Fetch current logged-in user
   const fetchUser = async () => {
     try {
       const res = await fetch("http://localhost:8080/api/auth/me", {
-        credentials: "include", // 🔥 REQUIRED for cookies
+        credentials: "include", //REQUIRED for cookies
       });
 
       if (res.ok) {
         const data = await res.json();
-        setUser(data); // user email or object
+        setUser(data);  
       } else {
         setUser(null);
       }
@@ -26,12 +26,10 @@ const AuthProvider = ({ children }) => {
     }
   };
 
-  // 🚀 Run once when app loads
   useEffect(() => {
     fetchUser();
   }, []);
 
-  // 🔓 Logout function
   const logout = async () => {
     try {
       await fetch("http://localhost:8080/api/logout", {
