@@ -25,6 +25,8 @@ public class UserEntity {
     private String phone;
     private String password;
 
+    
+
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
