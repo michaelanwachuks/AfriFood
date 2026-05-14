@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,19 +29,13 @@ public class UserEntity {
     private String phone;
     private String password;
 
-<<<<<<< HEAD
-    
-
-=======
     @OneToMany(mappedBy = "user")
-    private List<OrderEntity> orders;  
+    private List<OrderEntity> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Cart cart;
+
     
-
-    @OneToMany(mappedBy = "user")
-    private List<Cart> cart;
-
->>>>>>> 5a6d831c23813adfef18a52e17d5823192db9a1d
-
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;

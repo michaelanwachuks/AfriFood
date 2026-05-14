@@ -23,8 +23,8 @@ public class Cart {
     private UserEntity user;
 
     //Cart contains multiple items
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<Cart> cart;
+   // @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+   // private List<Cart> cart;
 
     // getters & setters
 }
