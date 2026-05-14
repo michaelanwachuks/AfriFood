@@ -34,9 +34,6 @@ const Login = () => {
     try {
       setLoading(true);
 
-      // Simulate API call (replace with real backend)
-      console.log("Logging in:", formData);
-
        const res = await fetch("/api/login", {
         method: "POST",
         headers: {
@@ -49,7 +46,7 @@ const Login = () => {
       console.log("Login response:", res);
 
       if (res.ok) {
-        
+
         console.log("Login successful");
         navigate("/components/Cart");
       } else {
