@@ -1,46 +1,38 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
- import {CartProvider}  from "./components/CartContext";
+import { CartProvider } from './context/CartContext';
 import './App.css'
 import NavigationBar from './components/NavigationBar'
-import Home from './components/Home'
-import Menu from './components/Menu'
-import About from './components/About'
-import FAQ from './components/FAQ'
-import Contact from './components/Contact'
-import Cart from './components/Cart'
-import Register from './components/Register'
-import Login from './components/Login'
+import Home from './pages/Home'
+import Menu from './pages/Menu'
+import About from './pages/About'
+import FAQ from './pages/FAQ'
+import Contact from './pages/Contact'
+import Cart from './pages/Cart'
+import Register from './pages/Register'
+import Login from './pages/Login'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
-import CartContext from './components/CartContext';
 import ProtectedRoute from './components/ProtectedRoute';
 
-
- 
-
 function App() {
-  
   return (
-      <CartProvider >
-        
-    <BrowserRouter>
-    
+    <CartProvider>
+      <BrowserRouter>
         <NavigationBar />
-       
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/faq" element={<FAQ />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/cart" element={
-              <ProtectedRoute> <Cart /> </ProtectedRoute>
-              } />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-          </Routes>
-        <Footer/>
-    </BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/menu" element={<Menu />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/faq" element={<FAQ />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/cart" element={
+            <ProtectedRoute><Cart /></ProtectedRoute>
+          } />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
     </CartProvider>
   )
 }

@@ -1,0 +1,135 @@
+import React from 'react'
+ import { useState } from "react";
+ import { useNavigate } from "react-router-dom";
+
+const Login = () => {
+
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    setError("");
+
+    if (!formData.email || !formData.password) {
+      setError("Please fill in all fields");
+      return;
+    }
+
+    try {
+      setLoading(true);
+
+       const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formData)
+      });
+
+      setLoading(false);
+      console.log("Login response:", res);
+
+      if (res.ok) {
+
+        console.log("Login successful");
+        navigate("/cart");
+      } else {
+        setError("Invalid email or password");
+      }
+
+    } catch (err) {
+      setLoading(false);
+      setError("Invalid email or password");
+    }
+  };
+
+   return (
+    <div className="container logincontainer mt-5">
+      <div className="row justify-content-center">
+
+        <div className="col-md-5">
+          <div className="card shadow-lg p-4">
+
+            <h3 className="text-center mb-4">Login</h3>
+
+            {error && (
+              <div className="alert alert-danger">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit}>
+
+              {/* Email */}
+              <div className="mb-3 ">
+                <label className="form-label">Email Address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Enter your email"
+                />
+              </div>
+
+              {/* Password */}
+              <div className="mb-3">
+                <label className="form-label d-flex justify-content-between">
+                  <span>Password</span>
+                  <a href="/forgot-password" style={{ fontSize: "0.9rem" }}>
+                    Forgot Password?
+                  </a>
+                </label>
+                <input
+                  type="password"
+                  className="form-control"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Enter your password"
+                />
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                className="btn btn-warning w-100"
+                disabled={loading}
+              >
+                {loading ? "Logging in..." : "Login"}
+              </button>
+
+            </form>
+
+            {/* Register Link */}
+            <div className="text-center mt-3">
+              <small>
+                Don’t have an account? <a href="/register">Register</a>
+              </small>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default Login
