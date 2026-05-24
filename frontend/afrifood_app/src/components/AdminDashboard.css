@@ -1,0 +1,9 @@
+.admin-dashboard .nav-link {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.admin-dashboard .nav-link.active {
+  font-weight: 600;
+}

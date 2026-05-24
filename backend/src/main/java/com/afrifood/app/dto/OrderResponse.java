@@ -10,6 +10,8 @@ public class OrderResponse {
     private double subtotal;
     private double deliveryFee;
     private double totalAmount;
+    private String customerName;
+    private String customerEmail;
     private List<OrderItemResponse> items;
 
     public OrderResponse() {
@@ -77,5 +79,21 @@ public class OrderResponse {
 
     public void setItems(List<OrderItemResponse> items) {
         this.items = items;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getCustomerEmail() {
+        return customerEmail;
+    }
+
+    public void setCustomerEmail(String customerEmail) {
+        this.customerEmail = customerEmail;
     }
 }

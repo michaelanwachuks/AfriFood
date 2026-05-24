@@ -74,8 +74,9 @@ const Home = () => {
             {/* Content */}
             <div className="card-body">
               <h5 className="card-title">{item.name}</h5>
+              <p className="text-muted small mb-1">{item.country}</p>
               <p className="card-text">{item.description}</p>
-              <h6>₦{item.price}</h6>
+              <h6>₦{item.price.toLocaleString()}</h6>
               <br />
               <button className="btn btn-primary">Order Now</button>
             </div>

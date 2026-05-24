@@ -1,63 +1,50 @@
 import './Menu.css'
 import 'bootstrap/dist/css/bootstrap.css';
-import jollof from '../assets/jollof.jpg'
-import poundo from '../assets/poundo.jpg'
-import amala from '../assets/amala.jpg'
-import suya from '../assets/suya.jpg'
-import suya2 from '../assets/suya_sallat.jpg'
-import amalaewedu from '../assets/amala-and-ewedu-2.jpg'
-import { useState } from "react";
+import { useContext } from 'react';
 import CartContext from '../context/CartContext';
-import { useContext } from 'react'; 
-
+import menuItems from '../data/MenuData';
 
 const Menu = () => {
-
-   // Get the addToCart function from the CartContext(using destructuring assignment)
   const { addToCart } = useContext(CartContext);
 
-   //define the menu data to display the menu dynamically
-    const menuItems = [
-    { id: 1, name: 'Jollof Rice', description: 'Delicious Jollof rice with herbs and spices.', price: 1299, image: jollof },
-    { id: 2, name: 'Pounded yam', description: 'Traditional Nigerian dish made from pounded yam.', price: 1499, image: poundo },
-    { id: 3, name: 'Amala', description: 'Traditional Nigerian dish made from yam.', price: 1099, image: amala },
-    { id: 4, name: 'Suya', description: 'Traditional Nigerian dish made from cow meat.', price: 1599, image: suya },
-    { id: 5, name: 'Suya', description: 'Traditional Nigerian dish made from cow meat.', price: 2099, image: suya2 },
-    { id: 6, name: 'Amala and Ewedu', description: 'Traditional Nigerian dish made from yam and ewedu.', price: 1299, image: amalaewedu }
-  ];
-
- 
   return (
     <div>
-       
-       <div className="container mt-5">
-      <h2 className="text-center mb-4 menu_style">Our Menu</h2>
+      <div className="container mt-5">
+        <h2 className="text-center mb-4 menu_style">Our Menu</h2>
+        <p className="text-center text-muted mb-4">
+          Popular dishes from across Africa
+        </p>
 
-      <div className="row g-4">
-
-        {menuItems.map((item, index)=>{
-          return (
-            <div className="col-md-4" key={index}>  
-          <div className="card h-100">
-            <img src={item.image} width={200} height={200} className="card-img-top" alt={item.name}/>
-            <div className="card-body">
-              <h5 className="card-title">{item.name}</h5>
-              <p className="card-text">
-                {item.description}
-              </p>
-              <h6>₦{item.price.toLocaleString()}</h6>
-              <br/>
-              <button className="btn btn-primary" onClick={() => addToCart(item)}>Order Now</button>
-            </div>
-          </div>
-        </div>
-          );
-        })}
-         
+        <div className="row g-4">
+          {menuItems.map((item) => (
+            <div className="col-md-4" key={item.id}>
+              <div className="card h-100">
+                <img
+                  src={item.image}
+                  className="card-img-top"
+                  alt={item.name}
+                  style={{ height: "200px", objectFit: "cover" }}
+                />
+                <div className="card-body d-flex flex-column">
+                  <span className="badge bg-secondary align-self-start mb-2">
+                    {item.country}
+                  </span>
+                  <h5 className="card-title">{item.name}</h5>
+                  <p className="card-text flex-grow-1">{item.description}</p>
+                  <h6>₦{item.price.toLocaleString()}</h6>
+                  <button
+                    className="btn btn-primary mt-2"
+                    onClick={() => addToCart(item)}
+                  >
+                    Order Now
+                  </button>
+                </div>
               </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
-       </div> 
-       
   );
 };
 

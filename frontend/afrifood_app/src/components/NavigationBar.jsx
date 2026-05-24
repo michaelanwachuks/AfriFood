@@ -69,9 +69,19 @@ const NavigationBar = () => {
             </li>
           ) : user ? (
             <>
+              {user.role === "ADMIN" && (
+                <li className="nav-item">
+                  <Link className="nav-link text-danger fw-semibold" to="/admin">
+                    Admin
+                  </Link>
+                </li>
+              )}
               <li className="nav-item">
                 <span className="nav-link text-warning">
                   Hi, {displayName}
+                  {user.role === "ADMIN" && (
+                    <span className="badge bg-danger ms-1">Admin</span>
+                  )}
                 </span>
               </li>
               <li className="nav-item">

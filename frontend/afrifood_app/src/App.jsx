@@ -11,9 +11,11 @@ import Cart from './pages/Cart'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import OrderConfirmation from './pages/OrderConfirmation'
+import AdminDashboard from './components/AdminDashboard'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
@@ -33,6 +35,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/order-confirmation" element={
             <ProtectedRoute><OrderConfirmation /></ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <AdminRoute><AdminDashboard /></AdminRoute>
           } />
         </Routes>
         <Footer />

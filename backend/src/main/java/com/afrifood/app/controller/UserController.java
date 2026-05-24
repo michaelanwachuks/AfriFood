@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.boot.security.autoconfigure.SecurityProperties.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,9 +22,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin("http://localhost:5173") // Allow requests from any origin
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class UserController {
-    //inject the UserService
+
     @Autowired
     UserService userService;
 
@@ -33,14 +32,18 @@ public class UserController {
     UserRepository userRepository;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request)   {
-       return ResponseEntity.ok(userService.registerUser(request));    
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request) {
+        try {
+            return ResponseEntity.ok(userService.registerUser(request));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest request, HttpServletResponse response) {
         try {
-            UserEntity user = userService.loginUser(request.getEmail(), request.getPassword(), request, response);
+            AuthUserResponse user = userService.loginUser(request.getEmail(), request.getPassword(), request, response);
             return ResponseEntity.ok(user);
         } catch (RuntimeException e) {
             return ResponseEntity.status(401).body(e.getMessage());
@@ -58,7 +61,7 @@ public class UserController {
             return ResponseEntity.status(401).body("Not logged in");
         }
 
-        return ResponseEntity.ok(new AuthUserResponse(user.getId(), user.getName(), user.getEmail()));
+        return ResponseEntity.ok(userService.toAuthResponse(user));
     }
 
     @PostMapping("/logout")
@@ -73,4 +76,3 @@ public class UserController {
         return ResponseEntity.ok("Logged out");
     }
 }
-

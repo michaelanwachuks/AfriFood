@@ -2,19 +2,21 @@ package com.afrifood.app.dto;
 
 import com.afrifood.app.entity.Role;
 
-public class AuthUserResponse {
+public class UserSummaryResponse {
     private Long id;
     private String name;
     private String email;
+    private String phone;
     private Role role;
 
-    public AuthUserResponse() {
+    public UserSummaryResponse() {
     }
 
-    public AuthUserResponse(Long id, String name, String email, Role role) {
+    public UserSummaryResponse(Long id, String name, String email, String phone, Role role) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.phone = phone;
         this.role = role;
     }
 
@@ -40,6 +42,14 @@ public class AuthUserResponse {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public Role getRole() {

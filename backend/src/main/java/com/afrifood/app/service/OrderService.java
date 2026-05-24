@@ -101,6 +101,25 @@ public class OrderService {
         return toOrderResponse(order, calculateSubtotal(order));
     }
 
+    public List<OrderResponse> getAllOrders() {
+        return orderRepository.findAllWithDetails().stream()
+                .map(order -> toOrderResponse(order, calculateSubtotal(order)))
+                .collect(Collectors.toList());
+    }
+
+    public OrderResponse updateOrderStatus(Long orderId, String status) {
+        if (status == null || status.isBlank()) {
+            throw new IllegalArgumentException("Status is required");
+        }
+
+        OrderEntity order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+
+        order.setOrderStatus(status.trim().toUpperCase());
+        OrderEntity saved = orderRepository.save(order);
+        return toOrderResponse(saved, calculateSubtotal(saved));
+    }
+
     private double calculateSubtotal(OrderEntity order) {
         if (order.getOrderItems() == null) {
             return order.getTotalAmount() - DELIVERY_FEE;
@@ -119,6 +138,11 @@ public class OrderService {
         response.setSubtotal(subtotal);
         response.setDeliveryFee(DELIVERY_FEE);
         response.setTotalAmount(order.getTotalAmount());
+
+        if (order.getUser() != null) {
+            response.setCustomerName(order.getUser().getName());
+            response.setCustomerEmail(order.getUser().getEmail());
+        }
 
         if (order.getOrderItems() != null) {
             response.setItems(order.getOrderItems().stream()
