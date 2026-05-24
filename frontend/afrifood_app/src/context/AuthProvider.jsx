@@ -8,8 +8,8 @@ const AuthProvider = ({ children }) => {
   //Fetch current logged-in user
   const fetchUser = async () => {
     try {
-      const res = await fetch("http://localhost:8080/api/auth/me", {
-        credentials: "include", //REQUIRED for cookies
+      const res = await fetch("/api/auth/me", {
+        credentials: "include",
       });
 
       if (res.ok) {
@@ -32,19 +32,19 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:8080/api/logout", {
+      await fetch("/api/logout", {
         method: "POST",
         credentials: "include",
       });
-
-      setUser(null);
     } catch (error) {
       console.error("Logout failed:", error);
+    } finally {
+      setUser(null);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, logout }}>
+    <AuthContext.Provider value={{ user, setUser, loading, logout, fetchUser }}>
       {children}
     </AuthContext.Provider>
   );

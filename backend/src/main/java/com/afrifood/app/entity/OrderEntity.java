@@ -91,6 +91,14 @@ public class OrderEntity {
         this.user = user;
     }
 
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
+    }
+
     // toString method
     @Override
     public String toString() {

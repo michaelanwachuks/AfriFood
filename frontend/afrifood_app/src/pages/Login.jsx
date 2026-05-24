@@ -1,10 +1,11 @@
-import React from 'react'
- import { useState } from "react";
- import { useNavigate } from "react-router-dom";
+import React, { useContext, useState } from 'react'
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
 
   const navigate = useNavigate();
+  const { fetchUser } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     email: "",
     password: ""
@@ -35,6 +36,7 @@ const Login = () => {
 
        const res = await fetch("/api/login", {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json"
         },
@@ -45,8 +47,7 @@ const Login = () => {
       console.log("Login response:", res);
 
       if (res.ok) {
-
-        console.log("Login successful");
+        await fetchUser();
         navigate("/cart");
       } else {
         setError("Invalid email or password");

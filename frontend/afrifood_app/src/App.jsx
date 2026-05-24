@@ -10,6 +10,7 @@ import Contact from './pages/Contact'
 import Cart from './pages/Cart'
 import Register from './pages/Register'
 import Login from './pages/Login'
+import OrderConfirmation from './pages/OrderConfirmation'
 import 'bootstrap/dist/css/bootstrap.css';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -30,6 +31,9 @@ function App() {
           } />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/order-confirmation" element={
+            <ProtectedRoute><OrderConfirmation /></ProtectedRoute>
+          } />
         </Routes>
         <Footer />
       </BrowserRouter>

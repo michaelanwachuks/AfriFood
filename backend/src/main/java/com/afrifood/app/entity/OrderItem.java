@@ -23,8 +23,10 @@ private Double price;
 @JoinColumn(name = "order_id")  
 private OrderEntity order;
 
-@ManyToOne 
-@JoinColumn(name = "food_id")  
+private String productName;
+
+@ManyToOne(optional = true)
+@JoinColumn(name = "food_id")
 private Food food;
 
 public OrderItem() {
@@ -77,6 +79,14 @@ public Food getFood() {
 
 public void setFood(Food food) {
     this.food = food;
+}
+
+public String getProductName() {
+    return productName;
+}
+
+public void setProductName(String productName) {
+    this.productName = productName;
 }
 
 @Override

@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.afrifood.app.dto.AuthUserResponse;
 import com.afrifood.app.dto.LoginRequest;
 import com.afrifood.app.dto.RegisterRequest;
 import com.afrifood.app.entity.UserEntity;
 import com.afrifood.app.repository.UserRepository;
 import com.afrifood.app.service.UserService;
+
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
@@ -28,47 +31,46 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-    
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody RegisterRequest request)   {
        return ResponseEntity.ok(userService.registerUser(request));    
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest request,  HttpServletResponse response) {
-       UserEntity user = userService.loginUser(request.getEmail(), request.getPassword(), request, response);
-      
-        return ResponseEntity.ok(user);
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest request, HttpServletResponse response) {
+        try {
+            UserEntity user = userService.loginUser(request.getEmail(), request.getPassword(), request, response);
+            return ResponseEntity.ok(user);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
     }
 
     @GetMapping("/auth/me")
-   public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(401).body("Not logged in");
+        }
 
-    if (authentication == null || !authentication.isAuthenticated()) {
-        return ResponseEntity.status(401).body("Not logged in");
+        UserEntity user = userRepository.findByEmail(authentication.getName());
+        if (user == null) {
+            return ResponseEntity.status(401).body("Not logged in");
+        }
+
+        return ResponseEntity.ok(new AuthUserResponse(user.getId(), user.getName(), user.getEmail()));
     }
 
-    return ResponseEntity.ok(authentication.getPrincipal());
-}
-    
-    @GetMapping("/orders")
-public ResponseEntity<?> getUserOrders(Authentication authentication) {
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+        Cookie cookie = new Cookie("jwt", "");
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
 
-    if (authentication == null || !authentication.isAuthenticated()) {
-        return ResponseEntity.status(401).body("Not logged in");
+        return ResponseEntity.ok("Logged out");
     }
-
-    String email = authentication.getName();
-
-    UserEntity user = userRepository.findByEmail(email);
-    if (user == null) {
-        throw new RuntimeException("User not found");
-    }
-
-    return ResponseEntity.ok(userService.getUserOrders(user.getId()));
-}
-
-
-
 }
 

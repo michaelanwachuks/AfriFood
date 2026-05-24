@@ -1,19 +1,27 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import CartContext from "../context/CartContext";
+import { AuthContext } from "../context/AuthContext";
 
 const NavigationBar = () => {
   const { cartCount } = useContext(CartContext);
+  const { user, loading, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+  };
+
+  const displayName = user?.name || user?.email || (typeof user === "string" ? user : null);
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 sticky-top">
 
-      {/* Logo / Brand */}
       <Link className="navbar-brand fw-bold" to="/">
         🍲 AfriFood
       </Link>
 
-      {/* Hamburger Button */}
       <button
         className="navbar-toggler"
         type="button"
@@ -23,38 +31,27 @@ const NavigationBar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      {/* Collapsible Menu */}
       <div className="collapse navbar-collapse" id="navbarContent">
 
-        {/* Left Links */}
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-
           <li className="nav-item">
             <Link className="nav-link" to="/">Home</Link>
           </li>
-
           <li className="nav-item">
             <Link className="nav-link" to="/menu">Menu</Link>
           </li>
-
           <li className="nav-item">
             <Link className="nav-link" to="/about">About</Link>
           </li>
-
           <li className="nav-item">
             <Link className="nav-link" to="/faq">FAQ</Link>
           </li>
-
           <li className="nav-item">
             <Link className="nav-link" to="/contact">Contact</Link>
           </li>
-
         </ul>
 
-        {/* Right Side (Cart + Auth) */}
-        <ul className="navbar-nav">
-
-          {/* Cart */}
+        <ul className="navbar-nav align-items-lg-center">
           <li className="nav-item me-3">
             <Link className="nav-link" to="/cart">
               Cart{" "}
@@ -66,15 +63,37 @@ const NavigationBar = () => {
             </Link>
           </li>
 
-          {/* Auth */}
-          <li className="nav-item">
-            <Link className="nav-link" to="/login">Login</Link>
-          </li>
-
-          <li className="nav-item">
-            <Link className="nav-link" to="/register">Register</Link>
-          </li>
-
+          {loading ? (
+            <li className="nav-item">
+              <span className="nav-link text-muted">...</span>
+            </li>
+          ) : user ? (
+            <>
+              <li className="nav-item">
+                <span className="nav-link text-warning">
+                  Hi, {displayName}
+                </span>
+              </li>
+              <li className="nav-item">
+                <button
+                  type="button"
+                  className="btn btn-outline-light btn-sm"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            </>
+          ) : (
+            <>
+              <li className="nav-item">
+                <Link className="nav-link" to="/login">Login</Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/register">Register</Link>
+              </li>
+            </>
+          )}
         </ul>
 
       </div>
