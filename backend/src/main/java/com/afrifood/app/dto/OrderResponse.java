@@ -12,6 +12,7 @@ public class OrderResponse {
     private double totalAmount;
     private String customerName;
     private String customerEmail;
+    private String createdAt;
     private List<OrderItemResponse> items;
 
     public OrderResponse() {
@@ -95,5 +96,13 @@ public class OrderResponse {
 
     public void setCustomerEmail(String customerEmail) {
         this.customerEmail = customerEmail;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 }

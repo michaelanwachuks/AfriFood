@@ -1,5 +1,6 @@
 package com.afrifood.app.service;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -107,6 +108,12 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
+    public OrderResponse getOrderById(Long orderId) {
+        OrderEntity order = orderRepository.findByIdWithDetails(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("Order not found"));
+        return toOrderResponse(order, calculateSubtotal(order));
+    }
+
     public OrderResponse updateOrderStatus(Long orderId, String status) {
         if (status == null || status.isBlank()) {
             throw new IllegalArgumentException("Status is required");
@@ -142,6 +149,10 @@ public class OrderService {
         if (order.getUser() != null) {
             response.setCustomerName(order.getUser().getName());
             response.setCustomerEmail(order.getUser().getEmail());
+        }
+
+        if (order.getCreatedAt() != null) {
+            response.setCreatedAt(order.getCreatedAt().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
         }
 
         if (order.getOrderItems() != null) {

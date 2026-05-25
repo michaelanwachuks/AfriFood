@@ -1,182 +1,137 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import AdminOverview from "../admin/AdminOverview";
+import AdminOrders from "../admin/AdminOrders";
+import AdminUsers from "../admin/AdminUsers";
+import AdminFoods from "../admin/AdminFoods";
+import {
+  fetchAnalytics,
+  fetchFoods,
+  fetchOrders,
+  fetchUsers,
+} from "../admin/adminApi";
 import "./AdminDashboard.css";
 
-const ORDER_STATUSES = ["PENDING", "CONFIRMED", "PREPARING", "OUT_FOR_DELIVERY", "DELIVERED", "CANCELLED"];
+const TABS = [
+  { id: "overview", label: "Overview", icon: "📊" },
+  { id: "orders", label: "Orders", icon: "📦" },
+  { id: "users", label: "Users", icon: "👥" },
+  { id: "foods", label: "Menu", icon: "🍽️" },
+];
 
 const AdminDashboard = () => {
-  const [orders, setOrders] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [activeTab, setActiveTab] = useState("overview");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [activeTab, setActiveTab] = useState("orders");
+  const [analytics, setAnalytics] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [foods, setFoods] = useState([]);
 
-  const loadData = async () => {
+  const loadAll = useCallback(async () => {
     setError("");
     try {
-      const [ordersRes, usersRes] = await Promise.all([
-        fetch("/api/admin/orders", { credentials: "include" }),
-        fetch("/api/admin/users", { credentials: "include" }),
+      const [analyticsData, ordersData, usersData, foodsData] = await Promise.all([
+        fetchAnalytics(),
+        fetchOrders(),
+        fetchUsers(),
+        fetchFoods(),
       ]);
-
-      if (!ordersRes.ok || !usersRes.ok) {
-        throw new Error("Failed to load admin data");
-      }
-
-      setOrders(await ordersRes.json());
-      setUsers(await usersRes.json());
+      setAnalytics(analyticsData);
+      setOrders(ordersData);
+      setUsers(usersData);
+      setFoods(foodsData);
     } catch (err) {
-      setError(err.message || "Could not load dashboard");
+      setError(err.message || "Failed to load dashboard");
     } finally {
       setLoading(false);
     }
-  };
-
-  useEffect(() => {
-    loadData();
   }, []);
 
-  const handleStatusChange = async (orderId, status) => {
+  useEffect(() => {
+    loadAll();
+  }, [loadAll]);
+
+  const refreshAnalytics = async () => {
     try {
-      const res = await fetch(`/api/admin/orders/${orderId}/status`, {
-        method: "PATCH",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status }),
-      });
-
-      if (!res.ok) {
-        const msg = await res.text();
-        throw new Error(msg || "Failed to update status");
-      }
-
-      const updated = await res.json();
-      setOrders((prev) => prev.map((o) => (o.id === orderId ? updated : o)));
+      setAnalytics(await fetchAnalytics());
+      setOrders(await fetchOrders());
     } catch (err) {
       alert(err.message);
     }
   };
 
   if (loading) {
-    return <div className="container mt-5 text-center">Loading admin dashboard...</div>;
+    return (
+      <div className="admin-loading">
+        <div className="spinner-border text-warning" role="status" />
+        <p className="mt-3 text-muted">Loading admin dashboard...</p>
+      </div>
+    );
   }
 
   if (error) {
     return (
       <div className="container mt-5">
         <div className="alert alert-danger">{error}</div>
+        <button type="button" className="btn btn-warning" onClick={loadAll}>Retry</button>
       </div>
     );
   }
 
   return (
-    <div className="container mt-4 admin-dashboard">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <div>
-          <h1 className="mb-1">Admin Dashboard</h1>
-          <p className="text-muted mb-0">Manage orders and users</p>
+    <div className="admin-dashboard">
+      <aside className="admin-sidebar">
+        <div className="admin-brand">
+          <span>🍲</span>
+          <div>
+            <strong>AfriFood</strong>
+            <small>Admin Panel</small>
+          </div>
         </div>
-        <span className="badge bg-danger fs-6">ADMIN</span>
-      </div>
-
-      <ul className="nav nav-tabs mb-4">
-        <li className="nav-item">
-          <button
-            type="button"
-            className={`nav-link ${activeTab === "orders" ? "active" : ""}`}
-            onClick={() => setActiveTab("orders")}
-          >
-            Orders ({orders.length})
-          </button>
-        </li>
-        <li className="nav-item">
-          <button
-            type="button"
-            className={`nav-link ${activeTab === "users" ? "active" : ""}`}
-            onClick={() => setActiveTab("users")}
-          >
-            Users ({users.length})
-          </button>
-        </li>
-      </ul>
-
-      {activeTab === "orders" && (
-        <div className="table-responsive">
-          <table className="table table-striped align-middle">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Customer</th>
-                <th>Address</th>
-                <th>Total</th>
-                <th>Status</th>
-                <th>Update</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.length === 0 ? (
-                <tr>
-                  <td colSpan="6" className="text-center text-muted">No orders yet</td>
-                </tr>
-              ) : (
-                orders.map((order) => (
-                  <tr key={order.id}>
-                    <td>{order.orderNumber}</td>
-                    <td>
-                      <div>{order.customerName}</div>
-                      <small className="text-muted">{order.customerEmail}</small>
-                    </td>
-                    <td className="small">{order.shippingAddress}</td>
-                    <td>₦{order.totalAmount?.toLocaleString()}</td>
-                    <td>
-                      <span className="badge bg-secondary">{order.orderStatus}</span>
-                    </td>
-                    <td>
-                      <select
-                        className="form-select form-select-sm"
-                        value={order.orderStatus}
-                        onChange={(e) => handleStatusChange(order.id, e.target.value)}
-                      >
-                        {ORDER_STATUSES.map((s) => (
-                          <option key={s} value={s}>{s}</option>
-                        ))}
-                      </select>
-                    </td>
-                  </tr>
-                ))
+        <nav className="admin-nav">
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              className={`admin-nav-btn ${activeTab === tab.id ? "active" : ""}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              <span>{tab.icon}</span>
+              {tab.label}
+              {tab.id === "orders" && orders.length > 0 && (
+                <span className="badge bg-warning text-dark ms-auto">{orders.length}</span>
               )}
-            </tbody>
-          </table>
-        </div>
-      )}
+            </button>
+          ))}
+        </nav>
+      </aside>
 
-      {activeTab === "users" && (
-        <div className="table-responsive">
-          <table className="table table-striped align-middle">
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Role</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((u) => (
-                <tr key={u.id}>
-                  <td>{u.name}</td>
-                  <td>{u.email}</td>
-                  <td>{u.phone}</td>
-                  <td>
-                    <span className={`badge ${u.role === "ADMIN" ? "bg-danger" : "bg-primary"}`}>
-                      {u.role}
-                    </span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <main className="admin-main">
+        <header className="admin-header">
+          <div>
+            <h1 className="h3 mb-0">
+              {TABS.find((t) => t.id === activeTab)?.label}
+            </h1>
+            <p className="text-muted small mb-0">Manage your AfriFood platform</p>
+          </div>
+          <span className="badge bg-danger">ADMIN</span>
+        </header>
+
+        <div className="admin-content">
+          {activeTab === "overview" && (
+            <AdminOverview analytics={analytics} onRefresh={refreshAnalytics} />
+          )}
+          {activeTab === "orders" && (
+            <AdminOrders orders={orders} onOrdersChange={setOrders} />
+          )}
+          {activeTab === "users" && (
+            <AdminUsers users={users} onUsersChange={setUsers} />
+          )}
+          {activeTab === "foods" && (
+            <AdminFoods foods={foods} onFoodsChange={setFoods} />
+          )}
         </div>
-      )}
+      </main>
     </div>
   );
 };
