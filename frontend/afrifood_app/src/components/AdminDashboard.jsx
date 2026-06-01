@@ -114,7 +114,7 @@ const AdminDashboard = () => {
             </h1>
             <p className="text-muted small mb-0">Manage your AfriFood platform</p>
           </div>
-          <span className="badge bg-danger">ADMIN</span>
+          <span className="admin-badge-admin">ADMIN</span>
         </header>
 
         <div className="admin-content">
