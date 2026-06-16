@@ -1,4 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBowlFood,
+  faBox,
+  faChartPie,
+  faUsers,
+  faUtensils,
+} from "@fortawesome/free-solid-svg-icons";
 import AdminOverview from "../admin/AdminOverview";
 import AdminOrders from "../admin/AdminOrders";
 import AdminUsers from "../admin/AdminUsers";
@@ -12,10 +20,10 @@ import {
 import "./AdminDashboard.css";
 
 const TABS = [
-  { id: "overview", label: "Overview", icon: "📊" },
-  { id: "orders", label: "Orders", icon: "📦" },
-  { id: "users", label: "Users", icon: "👥" },
-  { id: "foods", label: "Menu", icon: "🍽️" },
+  { id: "overview", label: "Overview", icon: faChartPie },
+  { id: "orders", label: "Orders", icon: faBox },
+  { id: "users", label: "Users", icon: faUsers },
+  { id: "foods", label: "Menu", icon: faUtensils },
 ];
 
 const AdminDashboard = () => {
@@ -63,7 +71,7 @@ const AdminDashboard = () => {
   if (loading) {
     return (
       <div className="admin-loading">
-        <div className="spinner-border text-warning" role="status" />
+        <div className="spinner-border text-success" role="status" />
         <p className="mt-3 text-muted">Loading admin dashboard...</p>
       </div>
     );
@@ -82,9 +90,7 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <aside className="admin-sidebar">
         <div className="admin-brand">
-          <span>🍲</span>
           <div>
-            <strong>AfriFood</strong>
             <small>Admin Panel</small>
           </div>
         </div>
@@ -96,7 +102,7 @@ const AdminDashboard = () => {
               className={`admin-nav-btn ${activeTab === tab.id ? "active" : ""}`}
               onClick={() => setActiveTab(tab.id)}
             >
-              <span>{tab.icon}</span>
+              <FontAwesomeIcon icon={tab.icon} className="admin-nav-icon" />
               {tab.label}
               {tab.id === "orders" && orders.length > 0 && (
                 <span className="badge bg-warning text-dark ms-auto">{orders.length}</span>
@@ -114,7 +120,7 @@ const AdminDashboard = () => {
             </h1>
             <p className="text-muted small mb-0">Manage your AfriFood platform</p>
           </div>
-          <span className="admin-badge-admin">ADMIN</span>
+           
         </header>
 
         <div className="admin-content">

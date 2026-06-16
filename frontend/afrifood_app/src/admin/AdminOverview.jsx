@@ -1,3 +1,15 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRotateRight,
+  faBox,
+  faCircleCheck,
+  faCircleXmark,
+  faClock,
+  faFire,
+  faMoneyBillWave,
+  faUsers,
+  faUtensils,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Area,
   AreaChart,
@@ -36,7 +48,7 @@ const STAT_CARDS = [
   {
     key: "revenue",
     label: "Total Revenue",
-    icon: "💰",
+    icon: faMoneyBillWave,
     gradient: "linear-gradient(135deg, #059669 0%, #10B981 50%, #34D399 100%)",
     getValue: (a) => formatMoney(a.totalRevenue),
     getSub: () => "All-time earnings",
@@ -44,7 +56,7 @@ const STAT_CARDS = [
   {
     key: "orders",
     label: "Total Orders",
-    icon: "📦",
+    icon: faBox,
     gradient: "linear-gradient(135deg, #D97706 0%, #F59E0B 50%, #FBBF24 100%)",
     getValue: (a) => a.totalOrders,
     getSub: (a) => `Avg ${formatMoney(a.averageOrderValue)}`,
@@ -52,7 +64,7 @@ const STAT_CARDS = [
   {
     key: "users",
     label: "Registered Users",
-    icon: "👥",
+    icon: faUsers,
     gradient: "linear-gradient(135deg, #2563EB 0%, #3B82F6 50%, #60A5FA 100%)",
     getValue: (a) => a.totalUsers,
     getSub: (a) => `${a.totalAdmins} admin accounts`,
@@ -60,7 +72,7 @@ const STAT_CARDS = [
   {
     key: "foods",
     label: "Menu Items",
-    icon: "🍽️",
+    icon: faUtensils,
     gradient: "linear-gradient(135deg, #7C3AED 0%, #8B5CF6 50%, #A78BFA 100%)",
     getValue: (a) => a.totalFoods,
     getSub: () => "Active catalog",
@@ -71,28 +83,28 @@ const PIPELINE_CARDS = [
   {
     key: "pending",
     label: "Pending",
-    icon: "⏳",
+    icon: faClock,
     gradient: "linear-gradient(135deg, #B45309, #F59E0B)",
     getValue: (a) => a.pendingOrders,
   },
   {
     key: "active",
     label: "In Progress",
-    icon: "🔥",
+    icon: faFire,
     gradient: "linear-gradient(135deg, #0E7490, #06B6D4)",
     getValue: (a) => a.activeOrders,
   },
   {
     key: "delivered",
     label: "Delivered",
-    icon: "✅",
+    icon: faCircleCheck,
     gradient: "linear-gradient(135deg, #047857, #10B981)",
     getValue: (a) => a.deliveredOrders,
   },
   {
     key: "cancelled",
     label: "Cancelled",
-    icon: "❌",
+    icon: faCircleXmark,
     gradient: "linear-gradient(135deg, #B91C1C, #EF4444)",
     getValue: (a) => a.cancelledOrders,
   },
@@ -103,7 +115,9 @@ const StatCard = ({ label, value, sub, icon, gradient }) => (
     <div className="admin-stat-card" style={{ background: gradient }}>
       <div className="admin-stat-card__glow" />
       <div className="admin-stat-card__content">
-        <div className="admin-stat-card__icon">{icon}</div>
+        <div className="admin-stat-card__icon">
+          <FontAwesomeIcon icon={icon} />
+        </div>
         <div>
           <p className="admin-stat-card__label">{label}</p>
           <h3 className="admin-stat-card__value">{value}</h3>
@@ -169,7 +183,8 @@ const AdminOverview = ({ analytics, onRefresh }) => {
           <p className="text-muted small mb-0">Real-time insights for your AfriFood business</p>
         </div>
         <button type="button" className="btn admin-btn-refresh" onClick={onRefresh}>
-          ↻ Refresh data
+          <FontAwesomeIcon icon={faArrowRotateRight} className="me-2" />
+          Refresh data
         </button>
       </div>
 

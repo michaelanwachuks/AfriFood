@@ -1,5 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useContext } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBowlFood, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import CartContext from "../context/CartContext";
 import { AuthContext } from "../context/AuthContext";
 
@@ -18,8 +20,9 @@ const NavigationBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-3 sticky-top">
 
-      <Link className="navbar-brand fw-bold" to="/">
-        🍲 AfriFood
+      <Link className="navbar-brand fw-bold d-flex align-items-center gap-2" to="/">
+        <FontAwesomeIcon icon={faBowlFood} className="text-warning" />
+        AfriFood
       </Link>
 
       <button
@@ -54,6 +57,7 @@ const NavigationBar = () => {
         <ul className="navbar-nav align-items-lg-center">
           <li className="nav-item me-3">
             <Link className="nav-link" to="/cart">
+              <FontAwesomeIcon icon={faCartShopping} className="me-1" />
               Cart{" "}
               {cartCount > 0 && (
                 <span className="badge bg-warning text-dark">

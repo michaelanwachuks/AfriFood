@@ -118,8 +118,8 @@ const AdminFoods = ({ foods, onFoodsChange }) => {
                   value={form.category} onChange={(e) => setForm({ ...form, category: e.target.value })} />
               </div>
               <div className="mb-2">
-                <label className="form-label">Image URL / path</label>
-                <input className="form-control" placeholder="/src/assets/jollof.jpg"
+                <label className="form-label">Image filename</label>
+                <input className="form-control" placeholder="jollof.jpg"
                   value={form.imageUrl} onChange={(e) => setForm({ ...form, imageUrl: e.target.value })} />
               </div>
               <div className="form-check mb-3">

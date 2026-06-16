@@ -28,8 +28,8 @@ export const updateUserRole = (id, role) =>
     method: "PATCH",
     body: JSON.stringify({ role }),
   });
-export const fetchFoods = () => request("/api/admin/foods");
-export const createFood = (data) =>
+export const fetchFoods = () => request("/api/admin/foods"); 
+export const createFood = (data) => 
   request("/api/admin/foods", { method: "POST", body: JSON.stringify(data) });
 export const updateFood = (id, data) =>
   request(`/api/admin/foods/${id}`, { method: "PUT", body: JSON.stringify(data) });
@@ -38,5 +38,5 @@ export const deleteFood = (id) =>
 export const toggleFoodAvailability = (id, available) =>
   request(`/api/admin/foods/${id}/availability`, {
     method: "PATCH",
-    body: JSON.stringify({ available }),
+    body: JSON.stringify({ available }), 
   });

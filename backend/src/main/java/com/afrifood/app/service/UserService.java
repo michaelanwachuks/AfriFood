@@ -28,18 +28,31 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public AuthUserResponse registerUser(RegisterRequest request) {
+        if (request.getName() == null || request.getName().isBlank()) {
+            throw new RuntimeException("Name is required");
+        }
+        if (request.getEmail() == null || request.getEmail().isBlank() || !request.getEmail().contains("@")) {
+            throw new RuntimeException("A valid email address is required");
+        }
+        if (request.getPhone() == null || request.getPhone().isBlank()) {
+            throw new RuntimeException("Phone number is required");
+        }
+        if (request.getPassword() == null || request.getPassword().length() < 6) {
+            throw new RuntimeException("Password must be at least 6 characters");
+        }
         if (!request.getPassword().equals(request.getConfirmPassword())) {
             throw new RuntimeException("Passwords do not match");
         }
 
-        if (userRepository.existsByEmail(request.getEmail())) {
+        String email = request.getEmail().trim().toLowerCase();
+        if (userRepository.existsByEmail(email)) {
             throw new RuntimeException("Email already exists");
         }
 
         UserEntity user = new UserEntity();
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
-        user.setPhone(request.getPhone());
+        user.setName(request.getName().trim());
+        user.setEmail(email);
+        user.setPhone(request.getPhone().trim());
         user.setRole(Role.USER);
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

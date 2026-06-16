@@ -24,9 +24,14 @@
   margin-bottom: 1.25rem;
 }
 
-.admin-brand span {
-  font-size: 2rem;
+.admin-brand__icon {
+  font-size: 1.75rem;
+  color: #fbbf24;
   filter: drop-shadow(0 2px 8px rgba(245, 158, 11, 0.5));
+}
+
+.admin-nav-icon {
+  width: 1.1rem;
 }
 
 .admin-brand strong {
@@ -155,10 +160,14 @@
 }
 
 .admin-stat-card__icon {
-  font-size: 2rem;
+  font-size: 1.75rem;
   line-height: 1;
   opacity: 0.95;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
 }
 
 .admin-stat-card__label {
