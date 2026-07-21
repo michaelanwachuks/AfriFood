@@ -20,12 +20,14 @@ AfriFood is a full-stack online food ordering platform built with React, Spring 
   <img src="backend/src/main/resources/project_screenshots/home.jpeg" width="50%" height="600px" />
   
 </p>
-
+<br/>
+<br/>
 <p>
  <img src="backend/src/main/resources/project_screenshots/login.jpeg" width="50%" height="600px" />
 
 </p>
-
+<br/>
+<br/>
 <p>
   <img src="backend/src/main/resources/project_screenshots/afrifood_admin.jpeg" width="50%" height="600px"/>
 </p>
